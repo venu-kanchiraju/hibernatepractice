@@ -1,0 +1,44 @@
+package com.hibernate.practice;
+
+import com.hibernate.practice.entity.Student;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PracticeApplication {
+
+	public static void main(String[] args){
+
+        Configuration cfg=new Configuration();
+        cfg.configure("hibernate.cfg.xml");
+        SessionFactory factory=cfg.buildSessionFactory();
+
+        Session session3 = factory.openSession();
+        Transaction tx2 = session3.beginTransaction();
+
+        Student studentToUpdate = session3.get(Student.class, 1);
+
+        if (studentToUpdate != null) {
+            studentToUpdate.setName("John Updated");
+            studentToUpdate.setAge(21);
+
+            session3.merge(studentToUpdate);
+        }
+
+        tx2.commit();
+        session3.close();
+
+        System.out.println("Student updated successfully!");
+	}
+
+}
+---------------------------------The output is: --------------------------------------------------
+
+Hibernate: select s1_0.id,s1_0.age,s1_0.name from Student s1_0 where s1_0.id=?
+Hibernate: update Student set age=?,name=? where id=?
+Student updated successfully!
+
+
