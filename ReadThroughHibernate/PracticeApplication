@@ -1,0 +1,54 @@
+package com.hibernate.practice;
+
+import com.hibernate.practice.entity.Student;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PracticeApplication {
+
+	public static void main(String[] args){
+
+        Configuration cfg=new Configuration();
+        cfg.configure("hibernate.cfg.xml");
+        SessionFactory factory=cfg.buildSessionFactory();
+        Session session2 = factory.openSession();
+
+        Student student = session2.get(Student.class, 2);
+
+        if (student != null) {
+            System.out.println("READ Student: " + student.getName() + " " + student.getAge());
+        } else {
+            System.out.println("Student not found!");
+        }
+
+        session2.close();
+	}
+
+}
+----------------------------------the below output ----------------------------------------------
+
+22:49:41.324 [main] INFO org.hibernate.orm.core -- HHH000001: Hibernate ORM core version 7.2.12.Final
+22:49:41.385 [main] WARN org.hibernate.orm.deprecation -- HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+22:49:42.249 [main] WARN org.hibernate.orm.connections.pooling -- HHH10001002: Using built-in connection pool (not intended for production use)
+22:49:42.831 [main] WARN org.hibernate.orm.deprecation -- HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+22:49:42.854 [main] INFO org.hibernate.orm.connections.pooling -- HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/hibernate_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.42
+	Default catalog/schema: hibernate_db/undefined
+	Autocommit mode: false
+	Isolation level: REPEATABLE_READ
+	JDBC fetch size: none
+	Pool: DriverManagerConnectionProvider
+	Minimum pool size: 1
+	Maximum pool size: 20
+22:49:43.868 [main] INFO org.hibernate.orm.core -- HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: select s1_0.id,s1_0.age,s1_0.name from Student s1_0 where s1_0.id=?
+READ Student: venu 22
+
+Process finished with exit code 0
