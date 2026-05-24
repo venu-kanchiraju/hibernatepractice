@@ -35,3 +35,7 @@ public class PracticeApplication {
 	}
 
 }
+-----------------------the output is: -----------------------------------
+Hibernate: select s1_0.id,s1_0.age,s1_0.name from Student s1_0 where s1_0.id=?
+Hibernate: delete from Student where id=?
+Student deleted successfully!
