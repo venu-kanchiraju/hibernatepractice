@@ -1,0 +1,37 @@
+package com.hibernate.practice;
+
+import com.hibernate.practice.entity.Student;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PracticeApplication {
+
+	public static void main(String[] args){
+
+        Configuration cfg=new Configuration();
+        cfg.configure("hibernate.cfg.xml");
+        SessionFactory factory=cfg.buildSessionFactory();
+        Session session4 = factory.openSession();
+        Transaction tx3 = session4.beginTransaction();
+
+        Student studentToDelete = session4.get(Student.class, 1);
+
+        if (studentToDelete != null) {
+            session4.remove(studentToDelete);
+        }
+
+        tx3.commit();
+        session4.close();
+
+        System.out.println("Student deleted successfully!");
+
+        // close factory
+        factory.close();
+
+	}
+
+}
