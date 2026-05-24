@@ -1,3 +1,4 @@
+//using hibernate we can insert the data in to the database.
 package com.hibernate.practice.entity;
 
 import jakarta.persistence.Entity;
